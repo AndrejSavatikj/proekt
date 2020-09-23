@@ -15,7 +15,6 @@ import com.stripe.exception.AuthenticationException;
 import com.stripe.exception.CardException;
 import com.stripe.exception.InvalidRequestException;
 import com.stripe.exception.StripeException;
-import com.stripe.model.Charge;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -116,18 +115,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 .orElseThrow(() -> new ShoppingCartIsNotActiveException(userId));
 
         List<Book> books = shoppingCart.getBooks();
-        float price = 0;
 
         for (Book book : books) {
             if (book.getQuantity() <= 0) {
                 throw new BookOutOfStockException(book.getName());
             }
             book.setQuantity(book.getQuantity()-1);
-            price += book.getPrice();
         }
-        Charge charge = null;
         try {
-            charge = this.paymentService.pay(chargeRequest);
+            this.paymentService.pay(chargeRequest);
         } catch (CardException | AuthenticationException | InvalidRequestException e) {
             throw new TransactionFailedException(userId, e.getMessage());
         }
