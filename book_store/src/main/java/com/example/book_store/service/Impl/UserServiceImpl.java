@@ -1,0 +1,38 @@
+package com.example.book_store.service.Impl;
+
+import com.example.book_store.model.User;
+import com.example.book_store.model.exceptions.UserNotFoundException;
+import com.example.book_store.model.exceptions.UsernameAlreadyExistsException;
+import com.example.book_store.repository.UserRepository;
+import com.example.book_store.service.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository ur;
+
+    public UserServiceImpl(UserRepository ur) {
+        this.ur = ur;
+    }
+
+    @Override
+    public User findById(String userId) {
+        return this.ur.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+    }
+
+    @Override
+    public User registerUser(User user) {
+        if (this.ur.existsById(user.getUsername())){
+            throw new UsernameAlreadyExistsException(user.getUsername());
+        }
+        return this.ur.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return this.ur.findById(s).orElseThrow(() -> new UsernameNotFoundException(s));
+    }
+}
