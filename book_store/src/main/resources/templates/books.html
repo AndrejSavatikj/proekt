@@ -117,21 +117,12 @@
                         <td th:text="${book.getCategory() != null} ? ${book.getCategory().getName()} : 'No Category'"></td>
                         <td class="text-right">
 
-                            <form th:action="@{/books/{id}/delete(id=${book.getId()})}" th:method="delete"
-                                  sec:authorize="hasRole('ROLE_ADMIN')">
-                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash">Delete</i>
-                                </button>
-                            </form>
+
 
 <!--                            <a th:href="@{/books/{id}/edit(id=${book.getId()})}" class="btn btn-secondary"-->
 <!--                               sec:authorize="hasRole('ROLE_ADMIN')"><i class="fa fa-trash"-->
 <!--                                                                        sec:authorize="hasRole('ROLE_ADMIN')">Edit</i>-->
 <!--                            </a>-->
-
-
-                            <form th:action="@{/books/{id}/edit(id=${book.getId()})}" sec:authorize="hasRole('ROLE_ADMIN')">
-                                <button class="btn btn-light"><i class="fa fa-trash">Edit</i></button>
-                            </form>
 
                             <form th:action="@{/shopping-cart/{id}/new-book(id=${book.getId()})}" th:method="post">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-trash">Add to
@@ -146,6 +137,14 @@
                             <form th:action="@{/shopping-cart/{id}/remove-book(id=${book.getId()})}" th:method="delete">
                                 <button type="submit" class="btn btn-light"><i class="fa fa-trash">Remove
                                     from cart</i></button>
+                            </form>
+                            <form th:action="@{/books/{id}/edit(id=${book.getId()})}" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <button class="btn btn-info"><i class="fa fa-trash">Edit</i></button>
+                            </form>
+                            <form th:action="@{/books/{id}/delete(id=${book.getId()})}" th:method="delete"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash">Delete</i>
+                                </button>
                             </form>
                         </td>
                     </tr>

@@ -101,4 +101,8 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles;
     }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
 }
