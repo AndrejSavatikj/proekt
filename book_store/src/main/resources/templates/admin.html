@@ -100,17 +100,17 @@
                         </td>
                         <td>
                             <ul>
-                                <li th:text="${user.isAccountNonExpired()}"></li>
-                                <li th:text="${user.isAccountNonLocked()}"></li>
-                                <li th:text="${user.isCredentialsNonExpired()}"></li>
-                                <li th:text="${user.isEnabled()}"></li>
+                                <li>Non expired: <span th:text="${user.isAccountNonExpired()}"></span></li>
+                                <li>Non locked: <span th:text="${user.isAccountNonLocked()}"></span></li>
+                                <li>Non expired: <span th:text="${user.isCredentialsNonExpired()}"></span></li>
+                                <li>Enabled: <span th:text="${user.isEnabled()}"></span></li>
                             </ul>
                         </td>
                         <td class="text-right">
-                            <form th:action="@{/admin/{username}/edit(username=${user.getUsername()})}" sec:authorize="hasRole('ROLE_ADMIN')">
-                                <button type="submit" class="btn btn-info"><i class="fa fa-trash">Edit user</i>
-                                </button>
-                            </form>
+<!--                            <form th:action="@{/admin/{username}/edit(username=${user.getUsername()})}" sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                                <button type="submit" class="btn btn-info"><i class="fa fa-trash">Edit user</i>-->
+<!--                                </button>-->
+<!--                            </form>-->
                             <form th:action="@{/admin/{username}/deleteUser(username=${user.getUsername()})}" th:method="delete" sec:authorize="hasRole('ROLE_ADMIN')">
                                 <button type="submit" class="btn btn-danger"><i class="fa fa-trash">Delete user</i>
                                 </button>

@@ -52,15 +52,6 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/edit-user")
-    @Secured("ROLE_ADMIN")
-    public String updateUser(User user, String newUsername) {
-        System.out.println(user.getUsername());
-        System.out.println(newUsername);
-        this.userService.editUser(user.getUsername(), newUsername);
-        System.out.println(user.getUsername());
-        return "redirect:/admin";
-    }
 
     @PostMapping("/{username}/deleteUser")
     @Secured("ROLE_ADMIN")

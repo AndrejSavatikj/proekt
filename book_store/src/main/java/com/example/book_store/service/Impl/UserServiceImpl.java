@@ -42,13 +42,6 @@ public class UserServiceImpl implements UserService {
         this.ur.delete(this.ur.findById(username).orElseThrow(() -> new UserNotFoundException(username)));
     }
 
-    @Override
-    public User editUser(String username, String newUsername) {
-        User editUser = this.findById(username);
-        editUser.setUsername(newUsername);
-        return this.ur.save(editUser);
-    }
-
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
