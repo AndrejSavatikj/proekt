@@ -54,6 +54,10 @@ public class AuthServiceImpl implements AuthService {
     @PostConstruct
     public void init() {
         if (!this.userRepository.existsById("admin")) {
+            Role role = new Role("ROLE_ADMIN");
+            Role role2 = new Role("ROLE_USER");
+            this.roleRepository.save(role);
+            this.roleRepository.save(role2);
             User admin = new User("admin", this.passwordEncoder.encode("admin"));
             admin.setRoles(this.roleRepository.findAll());
             this.userRepository.save(admin);

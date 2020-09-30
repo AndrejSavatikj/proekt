@@ -11,13 +11,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-    private List<String> allowedNames;
-
-    @PostConstruct
-    public void init() {
-        this.allowedNames = new ArrayList<>();
-        this.allowedNames.add("testUser");
-    }
 
     @GetMapping
     public String getLoginPage() {

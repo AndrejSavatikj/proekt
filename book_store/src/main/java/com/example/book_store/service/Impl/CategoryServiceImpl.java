@@ -6,6 +6,7 @@ import com.example.book_store.repository.CategoryRepository;
 import com.example.book_store.service.CategoryService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -55,9 +56,9 @@ public class CategoryServiceImpl implements CategoryService {
         this.cr.deleteById(id);
     }
 
-//    @PostConstruct
-//    public void init(){
-//        Category category = new Category("category1");
-//        this.cr.save(category);
-//    }
+    @PostConstruct
+    public void init(){
+        Category category = new Category("category1");
+        this.cr.save(category);
+    }
 }

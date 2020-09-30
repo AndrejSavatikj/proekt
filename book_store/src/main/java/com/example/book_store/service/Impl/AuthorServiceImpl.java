@@ -6,6 +6,7 @@ import com.example.book_store.repository.AuthorRepository;
 import com.example.book_store.service.AuthorService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -48,9 +49,9 @@ public class AuthorServiceImpl implements AuthorService {
         this.ar.deleteById(id);
     }
 
-//    @PostConstruct
-//    public void init(){
-//        Author author = new Author("author1");
-//        this.ar.save(author);
-//    }
+    @PostConstruct
+    public void init(){
+        Author author = new Author("author1");
+        this.ar.save(author);
+    }
 }
