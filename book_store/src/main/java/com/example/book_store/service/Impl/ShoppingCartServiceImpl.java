@@ -24,10 +24,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
+
     private final UserService userService;
     private final BookService bookService;
     private final PaymentService paymentService;
     private final ShoppingCartRepository shoppingCartRepository;
+
     public ShoppingCartServiceImpl(UserService userService, BookService bookService, PaymentService paymentService, ShoppingCartRepository shoppingCartRepository) {
         this.userService = userService;
         this.bookService = bookService;
@@ -74,6 +76,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCart.getBooks().add(book);
         return this.shoppingCartRepository.save(shoppingCart);
     }
+
+    @Override
+    public boolean existsByUserUsernameAndStatus(String username, CartStatus status) {
+        return this.shoppingCartRepository.existsByUserUsernameAndStatus(username, status);
+    }
+
     @Transactional
     @Override
     public ShoppingCart removeBookFromShoppingCart(String userId, Long bookId) {
@@ -131,5 +139,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCart.setStatus(CartStatus.FINISHED);
         shoppingCart.setCloseDate(LocalDateTime.now());
         return this.shoppingCartRepository.save(shoppingCart);
+    }
+
+    @Override
+    public void deleteShoppingCartsById(String userId) {
+        List<ShoppingCart> shoppingCartsToBeDeleted = this.findAllByUsername(userId);
+        for (ShoppingCart cart : shoppingCartsToBeDeleted) {
+            this.shoppingCartRepository.delete(cart);
+        }
     }
 }

@@ -9,4 +9,6 @@ public interface UserService extends UserDetailsService {
     List<User> findAll();
     User findById(String userId);
     User registerUser(User user);
+    void deleteUser(String username);
+    User editUser(String username, String newUsername);
 }

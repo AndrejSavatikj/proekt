@@ -22,9 +22,6 @@
             flex: 1 0 auto;
         }
 
-        #sticky-footer {
-            flex-shrink: none;
-        }
 
         /* Other Classes for Page Styling */
 
@@ -61,6 +58,9 @@
                 <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link" href="/admin">Admin panel</a>
+                </li>
             </ul>
             <a class="btn btn-primary" href="payments/charge" sec:authorize="isAuthenticated()">
                 <i class="fa fa-shopping-cart"></i> Cart
@@ -76,7 +76,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5">
-            <form action="/books"
+            <form action="/books/save"
                   method="post"
                   enctype="multipart/form-data"
                   th:object="${book}">
@@ -148,10 +148,6 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
-<!--                <a type="button" class="btn btn-primary" href="/books">Back</a>-->
-<!--                <form th:action="@{/books}">-->
-<!--                    <button class="btn btn-primary" style="width: 80px"><i class="fa fa-trash">Back</i></button>-->
-<!--                </form>-->
                 <button class="btn btn-primary" onclick="location.href='/books'" type="button" style="width: 80px">
                     Back</button>
             </form>

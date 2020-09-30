@@ -68,7 +68,9 @@ public class BookServiceImpl implements BookService {
         Book b = this.findById(id);
         Category category = this.cs.findById(book.getCategory().getId());
         b.setCategory(category);
-        b.setQuantity(b.getQuantity());
+        b.setQuantity(book.getQuantity());
+        b.setPrice(book.getPrice());
+        b.setName(book.getName());
         return getFinalBookWithImage(b, image);
     }
 

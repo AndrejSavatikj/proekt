@@ -17,4 +17,6 @@ public interface WishListService {
     WishList removeBookFromWishList(String userId, Long bookId);
 
     WishList getActiveWishList(String userId);
+
+    void deleteWishList(String userId);
 }

@@ -51,6 +51,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}/edit")
+    @Secured("ROLE_ADMIN")
     public String editBooksPage(Model model, @PathVariable Long id) {
         try {
             Book book = this.bs.findById(id);
@@ -67,7 +68,8 @@ public class BookController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/save")
+    @Secured("ROLE_ADMIN")
     public String saveBook(
             @Valid Book book,
             BindingResult bindingResult,
@@ -89,6 +91,7 @@ public class BookController {
     }
 
     @PostMapping("/{id}/delete")
+    @Secured("ROLE_ADMIN")
     public String deleteBook(@PathVariable Long id) {
         this.bs.deleteById(id);
         return "redirect:/books";

@@ -78,4 +78,9 @@ public class WishListServiceImpl implements WishListService {
             return this.wishListRepository.save(wishList);
         });
     }
+
+    @Override
+    public void deleteWishList(String userId) {
+        this.wishListRepository.delete(this.getActiveWishList(userId));
+    }
 }
