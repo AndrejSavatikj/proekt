@@ -42,6 +42,34 @@ public class UserServiceImpl implements UserService {
         this.ur.delete(this.ur.findById(username).orElseThrow(() -> new UserNotFoundException(username)));
     }
 
+    @Override
+    public User expire(String userId) {
+        User user = this.findById(userId);
+        user.setAccountNonExpired(!user.isAccountNonExpired());
+        return this.ur.save(user);
+    }
+
+    @Override
+    public User lock(String userId) {
+        User user = this.findById(userId);
+        user.setAccountNonLocked(!user.isAccountNonLocked());
+        return this.ur.save(user);
+    }
+
+    @Override
+    public User credentialExpire(String userId) {
+        User user = this.findById(userId);
+        user.setCredentialsNonExpired(!user.isCredentialsNonExpired());
+        return this.ur.save(user);
+    }
+
+    @Override
+    public User enable(String userId) {
+        User user = this.findById(userId);
+        user.setEnabled(!user.isEnabled());
+        return this.ur.save(user);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

@@ -10,4 +10,8 @@ public interface UserService extends UserDetailsService {
     User findById(String userId);
     User registerUser(User user);
     void deleteUser(String username);
+    User expire(String userId);
+    User lock(String userId);
+    User credentialExpire(String userId);
+    User enable(String userId);
 }

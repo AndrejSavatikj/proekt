@@ -49,9 +49,9 @@ public class AuthorServiceImpl implements AuthorService {
         this.ar.deleteById(id);
     }
 
-    @PostConstruct
-    public void init(){
-        Author author = new Author("author1");
-        this.ar.save(author);
-    }
+//    @PostConstruct
+//    public void init(){
+//        Author author = new Author("author1");
+//        this.ar.save(author);
+//    }
 }

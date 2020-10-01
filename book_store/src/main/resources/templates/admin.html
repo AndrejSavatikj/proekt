@@ -26,8 +26,7 @@
         /* Other Classes for Page Styling */
 
         body {
-            background: #007bff;
-            background: linear-gradient(to right, #607D8B, #B0BEC5);
+            background: #B0BEC5;
         }
     </style>
 
@@ -76,13 +75,16 @@
     </div>
 </nav>
 
+<div th:if="${param.error}">
+    <h2 class="text-center text-danger" th:text="${param.error}"></h2>
+</div>
 
 <div class="container mb-4">
     <div class="row">
         <div class="col-12" th:if="${users.size() > 0}">
             <div class="table-responsive">
-                <table class="table table-striped table-dark">
-                    <thead>
+                <table class="table">
+                    <thead class="thead-dark">
                     <tr>
                         <th scope="col">Username</th>
                         <th scope="col">Roles</th>
@@ -99,12 +101,34 @@
                             </ul>
                         </td>
                         <td>
-                            <ul>
-                                <li>Non expired: <span th:text="${user.isAccountNonExpired()}"></span></li>
-                                <li>Non locked: <span th:text="${user.isAccountNonLocked()}"></span></li>
-                                <li>Non expired: <span th:text="${user.isCredentialsNonExpired()}"></span></li>
-                                <li>Enabled: <span th:text="${user.isEnabled()}"></span></li>
-                            </ul>
+                            <table class="table table-sm">
+                                <tr>
+                                    <td>Non expired:</td>
+                                    <td th:text="${user.isAccountNonExpired()}"></td>
+                                    <td><a th:href="@{/admin/{username}/nonExpired(username=${user.getUsername()})}" th:method="post" sec:authorize="hasRole('ROLE_ADMIN')">change</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Non locked:</td>
+                                    <td th:text="${user.isAccountNonLocked()}"></td>
+                                    <td><a th:href="@{/admin/{username}/nonLocked(username=${user.getUsername()})}" th:method="post" sec:authorize="hasRole('ROLE_ADMIN')">change</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Non expired:</td>
+                                    <td th:text="${user.isCredentialsNonExpired()}"></td>
+                                    <td><a th:href="@{/admin/{username}/credentialNonExpired(username=${user.getUsername()})}" th:method="post" sec:authorize="hasRole('ROLE_ADMIN')">change</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Enabled:</td>
+                                    <td th:text="${user.isEnabled()}"></td>
+                                    <td><a th:href="@{/admin/{username}/enabled(username=${user.getUsername()})}" th:method="post" sec:authorize="hasRole('ROLE_ADMIN')">change</a></td>
+                                </tr>
+                            </table>
+<!--                            <ul>-->
+<!--                                <li>Non expired: <span ></span></li>-->
+<!--                                <li>Non locked: <span ></span></li>-->
+<!--                                <li>Non expired: <span ></span></li>-->
+<!--                                <li>Enabled: <span ></span></li>-->
+<!--                            </ul>-->
                         </td>
                         <td class="text-right">
 <!--                            <form th:action="@{/admin/{username}/edit(username=${user.getUsername()})}" sec:authorize="hasRole('ROLE_ADMIN')">-->
@@ -113,6 +137,14 @@
 <!--                            </form>-->
                             <form th:action="@{/admin/{username}/deleteUser(username=${user.getUsername()})}" th:method="delete" sec:authorize="hasRole('ROLE_ADMIN')">
                                 <button type="submit" class="btn btn-danger"><i class="fa fa-trash">Delete user</i>
+                                </button>
+                            </form>
+                            <form th:action="@{/admin/{username}/makeAdmin(username=${user.getUsername()})}" th:method="post" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <button type="submit" class="btn btn-info"><i class="fa fa-trash">Make admin</i>
+                                </button>
+                            </form>
+                            <form th:action="@{/admin/{username}/removeAdmin(username=${user.getUsername()})}" th:method="post" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash">Remove admin</i>
                                 </button>
                             </form>
 

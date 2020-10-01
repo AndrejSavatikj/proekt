@@ -56,9 +56,9 @@ public class CategoryServiceImpl implements CategoryService {
         this.cr.deleteById(id);
     }
 
-    @PostConstruct
-    public void init(){
-        Category category = new Category("category1");
-        this.cr.save(category);
-    }
+//    @PostConstruct
+//    public void init(){
+//        Category category = new Category("category1");
+//        this.cr.save(category);
+//    }
 }
