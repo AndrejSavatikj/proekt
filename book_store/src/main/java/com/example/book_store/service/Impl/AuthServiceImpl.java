@@ -54,11 +54,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User makeUserAdmin(String userId) {
+    public User makeUserModerator(String userId) {
         User user = this.userService.findById(userId);
         List<Role> userRoles = user.getRoles();
-        if (!userRoles.contains(this.roleRepository.findByName("ROLE_ADMIN"))) {
-            userRoles.add(this.roleRepository.findByName("ROLE_ADMIN"));
+        if (!userRoles.contains(this.roleRepository.findByName("ROLE_MODERATOR"))) {
+            userRoles.add(this.roleRepository.findByName("ROLE_MODERATOR"));
             user.setRoles(userRoles);
             return this.userRepository.save(user);
         }
@@ -66,11 +66,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User removeUserAdmin(String userId) {
+    public User removeUserModerator(String userId) {
         User user = this.userService.findById(userId);
         List<Role> userRoles = user.getRoles();
-        if (userRoles.contains(this.roleRepository.findByName("ROLE_ADMIN"))) {
-            userRoles.remove(this.roleRepository.findByName("ROLE_ADMIN"));
+        if (userRoles.contains(this.roleRepository.findByName("ROLE_MODERATOR"))) {
+            userRoles.remove(this.roleRepository.findByName("ROLE_MODERATOR"));
             user.setRoles(userRoles);
             return this.userRepository.save(user);
         }
@@ -82,8 +82,10 @@ public class AuthServiceImpl implements AuthService {
         if (!this.userRepository.existsById("admin")) {
             Role role = new Role("ROLE_ADMIN");
             Role role2 = new Role("ROLE_USER");
+            Role role3 = new Role("ROLE_MODERATOR");
             this.roleRepository.save(role);
             this.roleRepository.save(role2);
+            this.roleRepository.save(role3);
             User admin = new User("admin", this.passwordEncoder.encode("admin"));
             admin.setRoles(this.roleRepository.findAll());
             this.userRepository.save(admin);

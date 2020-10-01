@@ -6,6 +6,6 @@ public interface AuthService {
     User getCurrentUser();
     String getCurrentUserId();
     User signUpUser(String username, String password, String repeatedPassword);
-    User makeUserAdmin(String userId);
-    User removeUserAdmin(String userId);
+    User makeUserModerator(String userId);
+    User removeUserModerator(String userId);
 }

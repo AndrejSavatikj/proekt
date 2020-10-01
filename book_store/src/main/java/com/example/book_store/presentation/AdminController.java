@@ -55,11 +55,11 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/{username}/makeAdmin")
+    @PostMapping("/{username}/makeMod")
     @Secured("ROLE_ADMIN")
-    public String makeUserAdmin(@PathVariable String username) {
+    public String makeUserModerator(@PathVariable String username) {
         try {
-            this.authService.makeUserAdmin(username);
+            this.authService.makeUserModerator(username);
             return "redirect:/admin";
         }
         catch (RuntimeException ex) {
@@ -67,11 +67,11 @@ public class AdminController {
         }
 
     }
-    @PostMapping("/{username}/removeAdmin")
+    @PostMapping("/{username}/removeMod")
     @Secured("ROLE_ADMIN")
-    public String removeUserAdmin(@PathVariable String username) {
+    public String removeUserModerator(@PathVariable String username) {
         try {
-            this.authService.removeUserAdmin(username);
+            this.authService.removeUserModerator(username);
             return "redirect:/admin";
         }
         catch (RuntimeException ex) {
@@ -81,28 +81,28 @@ public class AdminController {
     }
 
     @GetMapping("/{username}/nonExpired")
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MODERATOR")
     public String expireUser(@PathVariable String username) {
         this.userService.expire(username);
         return "redirect:/admin";
     }
 
     @GetMapping("/{username}/nonLocked")
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MODERATOR")
     public String lockUser(@PathVariable String username) {
         this.userService.lock(username);
         return "redirect:/admin";
     }
 
     @GetMapping("/{username}/credentialNonExpired")
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MODERATOR")
     public String expireUserCredential(@PathVariable String username) {
         this.userService.credentialExpire(username);
         return "redirect:/admin";
     }
 
     @GetMapping("/{username}/enabled")
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MODERATOR")
     public String enableUser(@PathVariable String username) {
         this.userService.enable(username);
         return "redirect:/admin";
