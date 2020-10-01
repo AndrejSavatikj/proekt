@@ -142,6 +142,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    public int countTransactionsByUsername(String username) {
+        List<ShoppingCart> transactions = this.shoppingCartRepository.findAllByUserUsernameAndStatus(username, CartStatus.FINISHED);
+        return transactions.size();
+    }
+
+    @Override
     public void deleteShoppingCartsById(String userId) {
         List<ShoppingCart> shoppingCartsToBeDeleted = this.findAllByUsername(userId);
         for (ShoppingCart cart : shoppingCartsToBeDeleted) {

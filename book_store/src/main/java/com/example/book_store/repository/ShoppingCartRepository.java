@@ -13,4 +13,5 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long
     Optional<ShoppingCart> findByUserUsernameAndStatus(String userId, CartStatus status);
     boolean existsByUserUsernameAndStatus(String username, CartStatus status);
     List<ShoppingCart> findAllByUserUsername(String username);
+    List<ShoppingCart> findAllByUserUsernameAndStatus(String username, CartStatus status);
 }

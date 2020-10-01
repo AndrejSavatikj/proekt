@@ -33,21 +33,26 @@ public class AdminController {
     public String loadAdminPage(Model model) {
         List<User> users = this.userService.findAll().stream().filter(user -> !user.getUsername().equals("admin")).collect(Collectors.toList());
         model.addAttribute("users", users);
+        model.addAttribute("shoppingCartService", shoppingCartService);
         return "admin";
     }
 
     @PostMapping("/{username}/deleteUser")
     @Secured("ROLE_ADMIN")
     public String deleteUser(@PathVariable String username) {
-        this.wishListService.deleteWishList(username);
+        if (!username.equals("admin")) {
+            this.wishListService.deleteWishList(username);
 
-        if (this.shoppingCartService.existsByUserUsernameAndStatus(username, CartStatus.CREATED)) {
-            this.shoppingCartService.cancelActiveShoppingCart(username);
+            if (this.shoppingCartService.existsByUserUsernameAndStatus(username, CartStatus.CREATED)) {
+                this.shoppingCartService.cancelActiveShoppingCart(username);
+            }
+
+            this.shoppingCartService.deleteShoppingCartsById(username);
+            this.userService.deleteUser(username);
+            return "redirect:/admin";
+        } else {
+            throw new RuntimeException("Can't delete admin");
         }
-
-        this.shoppingCartService.deleteShoppingCartsById(username);
-        this.userService.deleteUser(username);
-        return "redirect:/admin";
     }
 
     @PostMapping("/{username}/makeAdmin")

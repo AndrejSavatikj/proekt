@@ -27,5 +27,7 @@ public interface ShoppingCartService {
 
     ShoppingCart checkoutShoppingCart(String userId, ChargeRequest chargeRequest) throws StripeException;
 
+    int countTransactionsByUsername(String username);
+
     void deleteShoppingCartsById(String userId);
 }
