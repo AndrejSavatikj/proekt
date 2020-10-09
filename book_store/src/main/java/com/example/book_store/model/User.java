@@ -105,4 +105,8 @@ public class User implements UserDetails {
     public List<Role> getRoles() {
         return roles;
     }
+
+    public boolean isSuspended() {
+        return !(this.isEnabled() && this.isCredentialsNonExpired() && this.isAccountNonLocked() && this.isAccountNonExpired());
+    }
 }

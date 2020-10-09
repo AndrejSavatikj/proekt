@@ -49,6 +49,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCart createNewShoppingCart(String userId) {
+        if (this.userService.findById(userId).isSuspended()) {
+            throw new AccountSuspendedException();
+        }
         User user = this.userService.findById(userId);
         if (this.shoppingCartRepository.existsByUserUsernameAndStatus(
                 user.getUsername(),
@@ -63,6 +66,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Transactional
     @Override
     public ShoppingCart addBookToShoppingCart(String userId, Long bookId) {
+        if (this.userService.findById(userId).isSuspended()) {
+            throw new AccountSuspendedException();
+        }
+
         ShoppingCart shoppingCart = this.getActiveShoppingCart(userId);
         Book book = this.bookService.findById(bookId);
         for (Book b : shoppingCart.getBooks()){
@@ -119,6 +126,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Transactional
     @Override
     public ShoppingCart checkoutShoppingCart(String userId, ChargeRequest chargeRequest) throws StripeException {
+        if (this.userService.findById(userId).isSuspended()) {
+            throw new AccountSuspendedException();
+        }
         ShoppingCart shoppingCart = this.shoppingCartRepository.findByUserUsernameAndStatus(userId, CartStatus.CREATED)
                 .orElseThrow(() -> new ShoppingCartIsNotActiveException(userId));
 
