@@ -4,7 +4,6 @@ import com.example.book_store.model.Book;
 import com.example.book_store.model.Category;
 import com.example.book_store.model.exceptions.BookNotFoundException;
 import com.example.book_store.repository.BookRepository;
-import com.example.book_store.service.AuthorService;
 import com.example.book_store.service.BookService;
 import com.example.book_store.service.CategoryService;
 import org.springframework.stereotype.Service;
@@ -18,12 +17,10 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
     private final BookRepository br;
     private final CategoryService cs;
-    private final AuthorService as;
 
-    public BookServiceImpl(BookRepository br, CategoryService cs, AuthorService as) {
+    public BookServiceImpl(BookRepository br, CategoryService cs) {
         this.br = br;
         this.cs = cs;
-        this.as = as;
     }
 
     @Override
@@ -48,9 +45,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book saveBook(Book book, MultipartFile image) throws IOException {
-//        Category category = this.cs.findById(book.getCategory().getId());
-//        book.setCategory(category);
-
         return getFinalBookWithImage(book, image);
     }
 
